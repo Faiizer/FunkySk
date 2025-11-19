@@ -12,6 +12,8 @@ import com.xxmicloxx.NoteBlockAPI.SongStoppedEvent;
 import me.limeglass.funky.FunkySk;
 import me.limeglass.funky.utils.MusicManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import org.bukkit.event.EventHandler;
 
@@ -38,10 +40,16 @@ public class MusicListener implements Listener {
 	}
 	
 	private void check(SongPlayer songPlayer) {
+		List<String> keysToRemove = new ArrayList<>();
+
 		for (Entry<String, SongPlayer> entry : MusicManager.getSongsEntry()) {
 			if (entry.getValue() == songPlayer) {
-				MusicManager.removeSong(entry.getKey());
+				keysToRemove.add(entry.getKey());
 			}
+		}
+
+		for (String key : keysToRemove) {
+			MusicManager.removeSong(key);
 		}
 	}
 }
